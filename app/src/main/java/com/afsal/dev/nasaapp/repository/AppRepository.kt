@@ -1,0 +1,1 @@
+package com.afsal.dev.nasaapp.repositoryimport com.afsal.dev.nasaapp.helper.Constants.API_KEYimport com.afsal.dev.nasaapp.network.ApiServiceimport javax.inject.Injectclass AppRepository @Inject constructor( private val apiService: ApiService) {suspend fun getPlaneteryData()=apiService.getPlaneteryData(API_KEY,10)}

@@ -1,0 +1,1 @@
+package com.afsal.dev.nasaapp.modelsclass Planetery_data : ArrayList<Planetery_dataItem>()
