@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.afsal.dev.nasaapp.R
 import com.afsal.dev.nasaapp.databinding.FragmentDetailsBinding
-import com.afsal.dev.nasaapp.models.Planetery_dataItem
+import com.afsal.dev.nasaapp.models.PlaneteryDataItem
 import com.afsal.dev.nasaapp.viewModel.AppViewModel
 import com.bumptech.glide.Glide
 
@@ -40,7 +39,7 @@ class DetailsFragment : Fragment() {
         })
     }
 
-    private fun setView(data:Planetery_dataItem){
+    private fun setView(data:PlaneteryDataItem){
         context?.let {
             Glide
                 .with(it)
