@@ -59,7 +59,7 @@ class ListingFragment : Fragment() {
 
             binding.progressBar.isVisible =result is Resource.Loading && result.data.isNullOrEmpty()
        //+    val errorVisibility =result is Resource.Error && result.data.isNullOrEmpty()
-            val errorMessge= result.error?.localizedMessage
+            val errorMessge= result.error.toString()
 
              Log.d("MMM","result error ${errorMessge.toString()}")
 
