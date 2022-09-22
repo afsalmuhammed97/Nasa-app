@@ -1,9 +1,12 @@
 package com.afsal.dev.nasaapp.ui
 
 import android.os.Bundle
+import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afsal.dev.nasaapp.R
 import com.afsal.dev.nasaapp.adapters.ListingAdapter
 import com.afsal.dev.nasaapp.databinding.FragmentListingBinding
-import com.afsal.dev.nasaapp.models.Planetery_dataItem
+import com.afsal.dev.nasaapp.helper.Resource
+import com.afsal.dev.nasaapp.models.PlaneteryDataItem
 import com.afsal.dev.nasaapp.viewModel.AppViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class ListingFragment : Fragment() {
@@ -47,11 +52,49 @@ class ListingFragment : Fragment() {
             listingAdapter.differ.submitList(it.body())
         })
 
+        viewModel.planeteryData.observe(viewLifecycleOwner) {result->
+
+            Log.d("MMM","result data in fragment ${result.data}")
+                    listingAdapter.differ.submitList(result.data )
+
+            binding.progressBar.isVisible =result is Resource.Loading && result.data.isNullOrEmpty()
+       //+    val errorVisibility =result is Resource.Error && result.data.isNullOrEmpty()
+
+
+
+
+               if (result is Resource.Error && result.data.isNullOrEmpty()){
+                   val errorMessge= result.error.toString()
+                   Log.d("MMM","result error in fragmet  ${errorMessge.toString()}")
+
+
+                   showSnackBar(errorMessge.toString(),)
+               }
+
+
+        }
+
         setView()
 
     }
 
-     private fun navigateToDetails(item:Planetery_dataItem){
+
+      private  fun showSnackBar(message:String,action:(()->Unit)?=null){
+
+            val snackbar=Snackbar.make(binding.listRv,message, Snackbar.LENGTH_LONG)
+
+            action?.let {
+                snackbar.setAction("Retry"){
+                    it()
+                }
+            }
+
+            snackbar.show()
+        }
+
+
+
+     private fun navigateToDetails(item:PlaneteryDataItem){
               viewModel.selectedData.postValue(item)
          findNavController().navigate(R.id.action_listingFragment_to_detailsFragment)
      }

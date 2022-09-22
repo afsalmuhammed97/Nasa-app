@@ -9,15 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afsal.dev.nasaapp.R
 import com.afsal.dev.nasaapp.databinding.FragmentDetailsBinding
-import com.afsal.dev.nasaapp.models.Planetery_dataItem
+import com.afsal.dev.nasaapp.models.PlaneteryDataItem
 import com.afsal.dev.nasaapp.viewModel.AppViewModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class DetailsFragment : Fragment() {
 
 
     private lateinit var viewModel: AppViewModel
-    private  var _binding: FragmentDetailsBinding? =null
+    private var _binding: FragmentDetailsBinding? = null
 
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -25,10 +26,10 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding=FragmentDetailsBinding.inflate(inflater,container,false)
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
-        viewModel=ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
-        return  binding.root
+        viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        return binding.root
     }
 
 
@@ -36,36 +37,37 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.selectedData.observe(viewLifecycleOwner, Observer {
-                                     setView(it)
+            setView(it)
         })
     }
 
-    private fun setView(data:Planetery_dataItem){
+    private fun setView(data: PlaneteryDataItem) {
         context?.let {
+
+
             Glide
                 .with(it)
                 .load(data.url)
-                // .centerCrop()
+                //.centerCrop()
+                .override(binding.imageView2.measuredWidth, binding.imageView2.measuredHeight)
                 .fitCenter()
-                // .placeholder(R.drawable.image_place_holder)
+                .placeholder(R.color.teal_200)
                 .into(binding.imageView2)
         }
 
         binding.apply {
-            tittle.text=data.title
-            distcription.text=data.explanation
-            date.text=data.date
+            tittle.text = data.title
+            distcription.text = data.explanation
+            date.text = data.date
         }
 
 
     }
 
 
-
-
     override fun onDestroy() {
         super.onDestroy()
-        _binding=null
+        _binding = null
     }
 
 

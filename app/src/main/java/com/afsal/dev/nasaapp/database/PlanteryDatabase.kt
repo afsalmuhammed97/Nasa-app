@@ -1,0 +1,1 @@
+package com.afsal.dev.nasaapp.databaseimport androidx.room.Databaseimport androidx.room.RoomDatabaseimport com.afsal.dev.nasaapp.models.PlaneteryDataItem@Database (entities = [PlaneteryDataItem ::class], version = 1)abstract class PlanteryDatabase ():RoomDatabase() {    abstract fun planeteryDao():PlaneteryDao}
