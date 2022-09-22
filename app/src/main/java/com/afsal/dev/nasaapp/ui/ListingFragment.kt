@@ -54,16 +54,23 @@ class ListingFragment : Fragment() {
 
         viewModel.planeteryData.observe(viewLifecycleOwner) {result->
 
-            Log.d("MMM","result data ${result.data}")
+            Log.d("MMM","result data in fragment ${result.data}")
                     listingAdapter.differ.submitList(result.data )
 
             binding.progressBar.isVisible =result is Resource.Loading && result.data.isNullOrEmpty()
        //+    val errorVisibility =result is Resource.Error && result.data.isNullOrEmpty()
-            val errorMessge= result.error.toString()
 
-             Log.d("MMM","result error ${errorMessge.toString()}")
+
+
+
+               if (result is Resource.Error && result.data.isNullOrEmpty()){
+                   val errorMessge= result.error.toString()
+                   Log.d("MMM","result error in fragmet  ${errorMessge.toString()}")
+
 
                    showSnackBar(errorMessge.toString(),)
+               }
+
 
         }
 
